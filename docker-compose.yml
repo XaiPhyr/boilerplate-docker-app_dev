@@ -40,3 +40,9 @@ services:
       - "1025:1025"
       - "8025:8025"
 
+  redis:
+    container_app: app_redis
+    image: redis:latest
+    # restart: always
+    ports:
+      - "6379:6379"
