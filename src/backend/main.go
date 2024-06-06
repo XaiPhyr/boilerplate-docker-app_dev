@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -18,11 +19,17 @@ import (
 	_ "github.com/lib/pq"
 )
 
+type RequestBody struct {
+	User    string `json:"user"`
+	Message string `json:"message"`
+}
+
 var endpoint = os.Getenv("ENDPOINT")
 var version = os.Getenv("VERSION")
 var url = func(api string) string {
 	return endpoint + api
 }
+var messageChan chan RequestBody
 
 func main() {
 	ctx := context.Background()
@@ -67,6 +74,66 @@ func main() {
 			}
 
 			w.Write([]byte(fmt.Sprintf("Redis Get: %s", val)))
+		})
+	})
+
+	r.Route(url("/connect-redis"), func(r chi.Router) {
+		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
+			w.Header().Set("Content-Type", "text/event-stream")
+			w.Header().Set("Cache-Control", "no-cache")
+			w.Header().Set("Connection", "keep-alive")
+
+			// sub := client.Subscribe(ctx, "redispubsub")
+
+			// ch := sub.Channel()
+			// for msg := range ch {
+			// 	fmt.Println()
+			// 	fmt.Printf("Channel: %s, Payload: %s\n", msg.Channel, msg.Payload)
+			// 	fmt.Println()
+			// 	w.Write([]byte(fmt.Sprintf("Channel: %s, Payload: %s", msg.Channel, msg.Payload)))
+			// }
+
+			// defer sub.Close()
+
+			flusher := w.(http.Flusher)
+			messageChan = make(chan RequestBody)
+
+			defer func() {
+				close(messageChan)
+				messageChan = nil
+			}()
+
+			for {
+				select {
+
+				case message := <-messageChan:
+					fmt.Fprintf(w, "data: %s\n\n", message)
+					flusher.Flush()
+
+				case <-r.Context().Done():
+					return
+				}
+			}
+		})
+	})
+
+	r.Route(url("/connect-redis-pub"), func(r chi.Router) {
+		r.Post("/", func(w http.ResponseWriter, r *http.Request) {
+			var data RequestBody
+
+			err := json.NewDecoder(r.Body).Decode(&data)
+			if err != nil {
+				log.Printf("Error JSON: %s", err)
+				return
+			}
+
+			messageChan <- data
+
+			cmd := client.Publish(ctx, "redispubsub", data.Message)
+			if cmd != nil {
+				log.Printf("Redis Publish: %s", cmd)
+				return
+			}
 		})
 	})
 
