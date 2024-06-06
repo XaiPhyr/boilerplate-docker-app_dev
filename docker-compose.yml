@@ -27,8 +27,11 @@ services:
         HTTP_PORT: 8200
     develop:
       watch:
-        - path: ./src/backend
-          action: rebuild
+        - action: sync
+          path: ./src/backend/
+          target: /app/src/backend/
+        - action: rebuild
+          path: ./src/backend/go.mod
     env_file:
       - ./secrets/backend/.env
 
@@ -41,7 +44,7 @@ services:
       - "8025:8025"
 
   redis:
-    container_app: app_redis
+    container_name: app_redis
     image: redis:latest
     # restart: always
     ports:
