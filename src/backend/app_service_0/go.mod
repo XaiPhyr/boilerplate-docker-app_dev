@@ -3,6 +3,7 @@ module app_service_0
 go 1.22.2
 
 require (
+	github.com/go-chi/httprate v0.9.0
 	github.com/redis/go-redis/v9 v9.5.2
 	github.com/rubenv/sql-migrate v1.6.1
 )
