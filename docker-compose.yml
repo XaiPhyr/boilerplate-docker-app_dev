@@ -12,8 +12,8 @@ services:
 
   # frontend:
 
-  backend:
-    container_name: app_backend
+  app_service_0:
+    container_name: app_service_0
     depends_on:
       - db
     stdin_open: true
@@ -21,19 +21,40 @@ services:
     ports:
       - "8200:8200"
     build:
-      context: ./src/backend
+      context: ./src/backend/app_service_0
       dockerfile: Dockerfile.dev
       args:
         HTTP_PORT: 8200
     develop:
       watch:
         - action: sync
-          path: ./src/backend/
+          path: ./src/backend/app_service_0
           target: /app/src/backend/
-        - action: rebuild
-          path: ./src/backend/go.mod
+        # - action: rebuild
+        #   path: ./src/backend/go.mod
     env_file:
-      - ./secrets/backend/.env
+      - ./secrets/backend/.env_service_0
+
+  app_service_1:
+    container_name: app_service_1
+    depends_on:
+      - db
+    stdin_open: true
+    tty: true
+    ports:
+      - "8201:8200"
+    build:
+      context: ./src/backend/app_service_1
+      dockerfile: Dockerfile.dev
+      args:
+        HTTP_PORT: 8200
+    develop:
+      watch:
+        - action: sync
+          path: ./src/backend/app_service_1
+          target: /app/src/backend/
+    env_file:
+      - ./secrets/backend/.env_service_1
 
   mail:
     container_name: app_mail
