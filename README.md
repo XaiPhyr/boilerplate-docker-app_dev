@@ -20,4 +20,5 @@ implemented redis for caching and SSE
 subscribing to app_service_0 via redis
 
 ## Frontend
-Vite
+- Framework: Vite + Vue.js
+- CSS: TailwindCSS

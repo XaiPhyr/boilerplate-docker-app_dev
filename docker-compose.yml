@@ -26,6 +26,9 @@ services:
         - action: sync
           path: ./src/frontend
           target: /app/src/frontend
+        - action: sync+restart
+          path: ./src/frontend/package.json
+          target: /app/src/frontend/package.json
       env_file:
         - ./secrets/frontend/.env
 

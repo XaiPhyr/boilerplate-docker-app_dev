@@ -1,0 +1,16 @@
+@import 'style-light.css';
+@import 'style-dark.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html[data-themed='light'] {
+  --background-color: #fff;
+  --text-color: #121212;
+}
+
+html[data-themed='dark'] {
+  --background-color: #121212;
+  --text-color: #fff;
+}
