@@ -17,7 +17,7 @@ var (
 	Logger            = middleware.Logger
 	Recoverer         = middleware.Recoverer
 	GetHead           = middleware.GetHead
-	HttpRate          = httprate.LimitByIP(100, LimiterExpiration)
+	HttpRate          = httprate.LimitByIP(5, LimiterExpiration)
 )
 
 func (Middleware) UseMiddlewares(r *chi.Mux) {

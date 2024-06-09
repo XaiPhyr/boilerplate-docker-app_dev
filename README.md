@@ -2,6 +2,9 @@
 
 uses [SQL Migrate](https://github.com/rubenv/sql-migrate)
 
+## Docker
+- to run application type command `docker compose up --watch` to keep track of changes and will sync and restart running docker
+
 ### Secrets
 password is stored in `secrets` folder  
 to initialize password, rename template.env  
@@ -15,3 +18,6 @@ implemented redis for caching and SSE
 
 ### app_service_1
 subscribing to app_service_0 via redis
+
+## Frontend
+Vite

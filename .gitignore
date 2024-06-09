@@ -3,3 +3,5 @@ secrets/db/password.txt
 secrets/db/.env
 secrets/backend/.env_service_0
 secrets/backend/.env_service_1
+src/backend/app_service_0/conf/config.yml
+src/frontend/.env

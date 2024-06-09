@@ -1,0 +1,8 @@
+server:
+  jwt_key: 'docker-app'
+
+smtp:
+  host: app_mail
+  port: 1025
+  user: ''
+  pass: ''

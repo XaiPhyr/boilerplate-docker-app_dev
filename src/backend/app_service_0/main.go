@@ -8,6 +8,7 @@ import (
 
 	router "app_service_0/routers"
 	sql "app_service_0/sql"
+	utils "app_service_0/utils"
 
 	_ "github.com/lib/pq"
 )
@@ -26,6 +27,8 @@ func main() {
 	log.Printf("-> Service: %s", service)
 	log.Printf("-> Version: %s", version)
 	log.Printf("-> Local:   http://localhost:%s", port)
+
+	utils.ParseFrontend(r)
 
 	err := http.ListenAndServe(fmt.Sprintf(":%s", port), r)
 	log.Printf("Error ListenAndServe: %s", err)
