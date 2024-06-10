@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import users from 'api/users';
 import Card from 'components/cards/Card.vue';
+import Table from 'components/tables/Table.vue';
 import {
   Squares2X2Icon,
   ListBulletIcon,
@@ -12,51 +13,74 @@ import {
 
 const isGrid = ref(true);
 const isExpandingAll = ref(false);
-const items = ref([
+const products = ref([
   {
-    id: '8a8f4d7c-3c7a-4d3d-9d4b-2efab0a0d0c7',
-    text: 'Lorem ipsum dolor sit amet',
-    subText:
-      'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Nulla facilisi. In sed tortor eget lorem posuere lacinia. Quisque fermentum odio eget nunc aliquet, eget placerat elit fringilla.',
-    image:
-      'https://fastly.picsum.photos/id/27/3264/1836.jpg?hmac=p3BVIgKKQpHhfGRRCbsi2MCAzw8mWBCayBsKxxtWO8g',
-    showMore: false,
+    name: 'Product 1',
+    description:
+      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Deserunt vel\
+    tempore tempora odio modi possimus quia, excepturi nesciunt provident\
+    repudiandae architecto necessitatibus earum quis nam perspiciatis eaque\
+    iusto ad mollitia.',
+    price: 10.99,
   },
   {
-    id: '1f3b1d74-0d39-4fae-9d1e-3e8d96a7b8d0',
-    text: 'Pellentesque habitant',
-    subText:
-      'Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Fusce vitae semper nunc. Aenean vel dui sit amet nunc commodo ultricies. Morbi eget massa eget risus bibendum sodales. Integer tincidunt tellus vel justo vestibulum, et tincidunt velit aliquet.',
-    image:
-      'https://fastly.picsum.photos/id/26/4209/2769.jpg?hmac=vcInmowFvPCyKGtV7Vfh7zWcA_Z0kStrPDW3ppP0iGI',
-    showMore: false,
+    name: 'Product 2',
+    description:
+      'Lorem ipsum dolor sit amet consectetur adipisicing elit. Ipsa inventore ut\
+    sit dignissimos corporis repellat veritatis autem, adipisci aut quia\
+    deleniti obcaecati ullam, id quasi voluptas provident earum et laudantium?\
+    Consequuntur praesentium, nobis dolore distinctio quidem eveniet ipsam fugit\
+    esse nam consectetur dolorum temporibus aliquam nostrum libero cupiditate\
+    tenetur, ab nemo voluptas aspernatur magnam facilis velit rerum commodi\
+    nulla. Neque!',
+    price: 19.99,
   },
   {
-    id: '2e3f09b6-6d7d-42c4-8c0c-2d0c7a3f7e5f',
-    text: 'Sed egestas',
-    subText:
-      'Sed egestas, nulla vitae rhoncus feugiat, sapien justo fermentum arcu, at lacinia quam libero eu justo. Nam sed pellentesque justo. Phasellus at erat ac justo consequat bibendum. Vestibulum consectetur augue sit amet felis posuere, a bibendum nibh vulputate. Nunc convallis, leo id vehicula scelerisque, sem velit consectetur justo, non aliquet sapien purus et eros.',
-    image:
-      'https://fastly.picsum.photos/id/30/1280/901.jpg?hmac=A_hpFyEavMBB7Dsmmp53kPXKmatwM05MUDatlWSgATE',
-    showMore: false,
+    name: 'Product 3',
+    description: 'This is the description for Product 3.',
+    price: 25.5,
   },
   {
-    id: 'b26f843e-0a5e-4a45-8af1-3e3f6cd2f2c8',
-    text: 'Vestibulum ante ipsum primis in faucibus',
-    subText:
-      'Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae; Donec euismod, leo in bibendum interdum, sem massa venenatis libero, id cursus felis libero at metus. Vivamus felis risus, vehicula vel pretium eget, imperdiet sed metus. Fusce fermentum mi et suscipit rhoncus.',
-    image:
-      'https://fastly.picsum.photos/id/34/3872/2592.jpg?hmac=4o5QGDd7eVRX8_ISsc5ZzGrHsFYDoanmcsz7kyu8A9A',
-    showMore: false,
+    name: 'Product 4',
+    description: 'This is the description for Product 4.',
+    price: 15.75,
   },
   {
-    id: '9c1c0a88-5e6f-495e-b0a2-9f1d2e6c9c2e',
-    text: 'Maecenas',
-    subText:
-      'Maecenas tincidunt magna sit amet ex sagittis, nec vulputate elit maximus. Nullam auctor, justo at malesuada tristique, mi massa tincidunt sapien, id vulputate sem ligula sit amet ligula. Quisque non condimentum ligula. Aliquam ut metus a lacus dignissim fringilla. Morbi vel sem eget eros hendrerit malesuada.',
-    image: '',
-    showMore: false,
+    name: 'Product 5',
+    description: 'This is the description for Product 5.',
+    price: 30.25,
   },
+  {
+    name: 'Product 6',
+    description: 'This is the description for Product 6.',
+    price: 12.99,
+  },
+  {
+    name: 'Product 7',
+    description: 'This is the description for Product 7.',
+    price: 22.5,
+  },
+  {
+    name: 'Product 8',
+    description: 'This is the description for Product 8.',
+    price: 17.49,
+  },
+  {
+    name: 'Product 9',
+    description: 'This is the description for Product 9.',
+    price: 28.99,
+  },
+  {
+    name: 'Product 10',
+    description: 'This is the description for Product 10.',
+    price: 35.0,
+  },
+]);
+
+const productColumns = ref([
+  { caption: 'Name', field: 'name' },
+  { caption: 'Description', field: 'description' },
+  { caption: 'Price', field: 'price' },
 ]);
 
 async function getUser() {
@@ -117,25 +141,11 @@ function expandAll() {
       <ArrowsPointingOutIcon v-else class="size-6 text-blue-500" />
     </button>
 
-    <div :class="`grid grid-${isGrid ? 'rows' : 'cols'}-3 gap-2`">
-      <div class="" v-for="item in items" :key="item">
-        <component :is="Card" class="p-1" :image="item.image">
-          <template v-slot:card-title> {{ item.id }} </template>
-          <template v-slot:card-text>{{ item.text }}</template>
-          <template v-slot:card-sub-text>
-            <span class="text-ellipsis overflow-hidden">
-              {{ ellipse(item) }}
-              <span
-                class="text-blue-500 hover:text-blue-900 cursor-pointer"
-                @click="item.showMore = !item.showMore"
-              >
-                show {{ item.showMore ? 'less' : 'more' }}...
-              </span>
-            </span>
-          </template>
-        </component>
-      </div>
-    </div>
+    <component
+      :is="Table"
+      :data-column="productColumns"
+      :data-source="products"
+    />
   </div>
 </template>
 

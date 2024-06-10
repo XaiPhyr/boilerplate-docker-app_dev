@@ -8,11 +8,11 @@ const props = defineProps({
 
 <template>
   <div class="">
-    <div :class="`max-w-${size} bg-white rounded-xl shadow-md overflow-hidden`">
+    <div :class="`max-w-${size} bg-white rounded-xl shadow overflow-hidden`">
       <div class="md:flex">
         <div v-if="image" class="md:shrink-0">
           <img
-            class="h-full w-full object-cover md:h-25 md:w-20"
+            class="h-full w-full md:object-cover md:h-25 md:w-20"
             :src="image"
             alt="lorem picsum"
           />

@@ -1,7 +1,9 @@
 <script setup></script>
 
 <template>
-  <router-view />
+  <div class="p-8">
+    <router-view />
+  </div>
 </template>
 
 <style scoped></style>
