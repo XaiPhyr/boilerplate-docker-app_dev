@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import users from 'api/users';
 import Card from 'components/cards/Card.vue';
 import Table from 'components/tables/Table.vue';
+import Draggables from 'components/draggables/Draggables.vue';
 import {
   Squares2X2Icon,
   ListBulletIcon,
@@ -141,11 +142,7 @@ function expandAll() {
       <ArrowsPointingOutIcon v-else class="size-6 text-blue-500" />
     </button>
 
-    <component
-      :is="Table"
-      :data-column="productColumns"
-      :data-source="products"
-    />
+    <component :is="Draggables" />
   </div>
 </template>
 
