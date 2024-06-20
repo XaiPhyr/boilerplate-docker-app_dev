@@ -74,30 +74,32 @@ function onDropOutside(event) {
 </script>
 
 <template>
-  <div
-    id="outside"
-    class=""
-    @drop="onDropOutside($event)"
-    @dragover="onDragOverOutside($event)"
-  >
+  <div class="">
     <div
-      id="target"
-      class="border flex flex-row gap-4 p-1 w-1/4 h-auto text-center mb-5"
-      @drop="onDropInside($event)"
-      @dragover="onDragOver($event)"
-    ></div>
-
-    <div class="flex flex-row gap-2" id="sources">
+      id="outside"
+      class=""
+      @drop="onDropOutside($event)"
+      @dragover="onDragOverOutside($event)"
+    >
       <div
-        :id="`source-${item}`"
-        v-for="(item, index) in items"
-        :key="index"
-        class="border p-1 w-1/4 text-center mb-5"
-        draggable="true"
-        @dragstart="onDrag($event)"
-        :data-value="item"
-      >
-        {{ item }}
+        id="target"
+        class="border flex flex-row flex-wrap gap-4 p-1 w-1/4 h-auto text-center mb-5"
+        @drop="onDropInside($event)"
+        @dragover="onDragOver($event)"
+      ></div>
+
+      <div class="flex flex-row gap-2" id="sources">
+        <div
+          :id="`source-${item}`"
+          v-for="(item, index) in items"
+          :key="index"
+          class="border p-1 w-1/4 text-center mb-5"
+          draggable="true"
+          @dragstart="onDrag($event)"
+          :data-value="item"
+        >
+          {{ item }}
+        </div>
       </div>
     </div>
 
