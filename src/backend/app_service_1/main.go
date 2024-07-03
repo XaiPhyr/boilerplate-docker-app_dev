@@ -8,6 +8,7 @@ import (
 	"os"
 
 	"github.com/go-chi/chi/v5"
+	"github.com/go-chi/cors"
 	"github.com/redis/go-redis/v9"
 )
 
@@ -32,16 +33,30 @@ func main() {
 	log.Printf("-> Version: %s", version)
 	log.Printf("-> Local:   http://localhost:%s", port)
 
-	go func() {
-		sub := client.Subscribe(ctx, "app_service")
+	// go func() {
+	// 	sub := client.Subscribe(ctx, "app_service")
 
-		ch := sub.Channel()
-		for msg := range ch {
-			log.Printf("APP SERVICE %s REDIS SUB: %s", service, msg.Payload)
-		}
+	// 	ch := sub.Channel()
+	// 	for msg := range ch {
+	// 		log.Printf("APP SERVICE %s REDIS SUB: %s", service, msg.Payload)
+	// 	}
 
-		defer sub.Close()
-	}()
+	// 	defer sub.Close()
+	// }()
+
+	r.Use(cors.Handler(cors.Options{
+		AllowedOrigins:   []string{"https://*", "http://*"},
+		AllowedMethods:   []string{"GET", "POST", "PUT", "DELETE", "OPTIONS"},
+		AllowedHeaders:   []string{"Accept", "Authorization", "Content-Type", "X-CSRF-Token"},
+		ExposedHeaders:   []string{"Link"},
+		AllowCredentials: false,
+		MaxAge:           300, // Maximum value not ignored by any of major browsers
+	}))
+
+	r.Get("/routed", func(w http.ResponseWriter, r *http.Request) {
+		fmt.Println("CONNECTED TO APP SERVICE 1")
+		w.Write([]byte("HELLO WORLD"))
+	})
 
 	err := http.ListenAndServe(fmt.Sprintf(":%s", port), r)
 	log.Printf("Error ListenAndServe: %s", err)
