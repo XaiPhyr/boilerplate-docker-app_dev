@@ -1,7 +1,8 @@
 secrets/backend/.env
 secrets/db/password.txt
 secrets/db/.env
-secrets/backend/.env_service_0
+secrets/backend/.env_gateway
 secrets/backend/.env_service_1
-src/backend/app_service_0/conf/config.yml
-src/frontend/.env
+src/backend/gateway/conf/config-*.yml
+src/backend/service_1/conf/config-*.yml
+src/frontend/app/.env
